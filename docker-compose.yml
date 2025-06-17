@@ -1,0 +1,25 @@
+version: '3.8'
+
+networks:
+  bpw-bitcoin-node-network:
+    external: true
+
+services:
+  electrs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bpw-electrs
+    environment:
+      - ELECTRS_NETWORK=bitcoin
+      - ELECTRS_LOG_FILTER=info
+      - ELECTRS_DAEMON_RPC_ADDR=bitcoin-regtest:8332
+      - ELECTRS_DAEMON_P2P_ADDR=bitcoin-regtest:8333
+      - ELECTRS_ELECTRUM_RPC_ADDR=0.0.0.0:50001
+      - ELECTRS_DB_DIR=/data
+    volumes:
+      - ./bpw-electrs-data:/data
+    ports:
+      - "50001:50001"
+    networks:
+      - bpw-bitcoin-node-network
