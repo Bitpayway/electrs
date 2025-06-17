@@ -20,5 +20,9 @@ RUN cargo install --locked --path .
 FROM base AS result
 # Copy the binaries
 COPY --from=electrs-build /root/.cargo/bin/electrs /usr/bin/electrs
+RUN mkdir -p /etc/electrs
 
 WORKDIR /
+
+ENTRYPOINT ["electrs"]
+
